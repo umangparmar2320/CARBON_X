@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | CarbonX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/auth.css">
+</head>
+
+<body>
+    <div class="auth-page">
+        <div class="auth-card fade-in" style="max-width: 520px;">
+            <div class="auth-header">
+                <a href="index.html" class="logo">
+                    <i class="fas fa-leaf"></i> CarbonX
+                </a>
+                <h2>Create Your Account</h2>
+                <p>Join the carbon credit revolution. Free forever.</p>
+            </div>
+
+            <form id="register-form">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="reg-name">Full Name</label>
+                        <input type="text" id="reg-name" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="reg-role">Role</label>
+                        <select id="reg-role">
+                            <option value="Buyer">Buyer</option>
+                            <option value="Seller">Seller</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="reg-username">Username</label>
+                    <input type="text" id="reg-username" placeholder="johndoe123" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-email">Email Address</label>
+                    <input type="email" id="reg-email" placeholder="john@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="reg-password">Password</label>
+                    <div class="password-field">
+                        <input type="password" id="reg-password" placeholder="••••••••" required>
+                        <button type="button" class="password-toggle" id="toggle-pw">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block btn-lg mt-2">
+                    <i class="fas fa-user-plus"></i> Create Account
+                </button>
+            </form>
+
+            <div class="divider">OR</div>
+
+            <p class="text-center text-muted" style="font-size: 0.9rem;">
+                Already have an account? <a href="login.html" style="color: var(--primary); font-weight: 600;">Sign
+                    In</a>
+            </p>
+        </div>
+    </div>
+
+    <script src="js/core/auth.js"></script>
+    <script src="js/core/router.js"></script>
+    <script src="js/services/notifications.js"></script>
+    <script src="js/core/main.js"></script>
+    <script>
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const res = await Auth.register({
+                name: document.getElementById('reg-name').value,
+                username: document.getElementById('reg-username').value,
+                email: document.getElementById('reg-email').value,
+                password: document.getElementById('reg-password').value,
+                role: document.getElementById('reg-role').value
+            });
+            if (res.success) {
+                window.location.href = 'dashboard.html';
+            } else {
+                alert(res.message);
+            }
+        });
+        document.getElementById('toggle-pw').addEventListener('click', (e) => {
+            e.preventDefault();
+            const pw = document.getElementById('reg-password');
+            const icon = document.querySelector('#toggle-pw i');
+            if (pw.type === 'password') {
+                pw.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                pw.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+    </script>
+</body>
+
+</html>

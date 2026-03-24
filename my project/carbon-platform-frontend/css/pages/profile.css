@@ -1,0 +1,64 @@
+/* ============================================
+   Profile / Settings Page Specific Styles
+   ============================================ */
+
+.data-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.gap-2 {
+    gap: 1rem;
+}
+
+.mb-1 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-2 {
+    margin-bottom: 1rem;
+}
+
+.mt-1 {
+    margin-top: 0.5rem;
+}
+
+.mt-2 {
+    margin-top: 1rem;
+}
+
+.btn-block {
+    width: 100%;
+    text-align: center;
+}
+
+#profile-form .form-group {
+    margin-bottom: 1.25rem;
+}
+
+#profile-form .form-group label {
+    display: block;
+    margin-bottom: 0.4rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+}
+
+#profile-form .form-group input {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    .data-row {
+        grid-template-columns: 1fr;
+    }
+}

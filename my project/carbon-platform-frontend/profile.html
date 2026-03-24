@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile Settings | CarbonX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/profile.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header id="main-navbar" class="main-navbar"></header>
+        <aside id="main-sidebar" class="main-sidebar"></aside>
+
+        <main class="main-content">
+            <div class="fade-in mb-2">
+                <h1>Settings</h1>
+                <p class="text-muted">Manage your account and platform preferences.</p>
+            </div>
+
+            <div class="data-row fade-in">
+                <div class="card">
+                    <h3>Account Information</h3>
+                    <div class="mt-2 d-flex align-center gap-2 mb-2">
+                        <img id="profile-avatar-img" src="" alt="Avatar"
+                            style="width: 80px; height: 80px; border-radius: 50%;">
+                        <div>
+                            <h2 id="profile-full-name">Name</h2>
+                            <p id="profile-subtitle" class="text-muted">Role</p>
+                        </div>
+                    </div>
+
+                    <form id="profile-form">
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <input type="text" id="profile-name">
+                        </div>
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <input type="email" id="profile-email">
+                        </div>
+                        <div class="form-group">
+                            <label>Professional Role</label>
+                            <input type="text" id="profile-role">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </form>
+                </div>
+
+                <div class="card">
+                    <h3>Security</h3>
+                    <div class="mt-2">
+                        <button class="btn btn-outline btn-block mb-1">Change Password</button>
+                        <button class="btn btn-outline btn-block">Enable 2FA</button>
+                        <hr class="mt-2 mb-2" style="border-color: var(--border);">
+                        <button class="btn btn-block" style="color: var(--error);">Deactivate Account</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils/constants.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/auth.js"></script>
+    <script src="js/core/router.js"></script>
+    <script src="js/ui/theme.js"></script>
+    <script src="js/ui/ui.js"></script>
+    <script src="js/ui/sidebar.js"></script>
+    <script src="js/services/notifications.js"></script>
+    <script src="js/modules/profile.js"></script>
+    <script src="js/core/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const waitForApp = setInterval(() => {
+                if (window.App && window.App._readyCallbacks !== undefined) {
+                    clearInterval(waitForApp);
+                    App.onReady(() => { if (window.Profile) Profile.init(); });
+                }
+            }, 50);
+        });
+    </script>
+</body>
+
+</html>

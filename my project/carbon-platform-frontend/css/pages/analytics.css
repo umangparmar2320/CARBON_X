@@ -1,0 +1,31 @@
+/* ============================================
+   Analytics Page Specific Styles
+   ============================================ */
+
+.chart-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+}
+
+.chart-card {
+    min-height: 380px;
+}
+
+#top-movers-table tr:hover {
+    background: var(--card-hover);
+}
+
+.text-green {
+    color: var(--success);
+}
+
+.text-red {
+    color: var(--error);
+}
+
+@media (max-width: 768px) {
+    .chart-row {
+        grid-template-columns: 1fr;
+    }
+}

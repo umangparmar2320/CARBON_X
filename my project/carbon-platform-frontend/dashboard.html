@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | CarbonX</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/dashboard.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header id="main-navbar" class="main-navbar"></header>
+        <aside id="main-sidebar" class="main-sidebar"></aside>
+
+        <main class="main-content">
+            <div class="dashboard-header fade-in">
+                <h1>Dashboard</h1>
+                <p class="text-muted">Welcome back! Here's your carbon portfolio overview.</p>
+            </div>
+
+            <!-- Stats -->
+            <div class="dashboard-grid fade-in">
+                <div id="stat-portfolio" class="stat-card">
+                    <div class="stat-icon" style="background: rgba(16,185,129,0.12); color: var(--success)"><i
+                            class="fas fa-briefcase"></i></div>
+                    <div class="stat-info">
+                        <h4>Portfolio Value</h4>
+                        <h3 id="portfolio-value">$0.00</h3>
+                        <p class="stat-change up"><i class="fas fa-caret-up"></i> 0% <span>vs last month</span></p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(59,130,246,0.12); color: var(--secondary)"><i
+                            class="fas fa-leaf"></i></div>
+                    <div class="stat-info">
+                        <h4>Total Credits</h4>
+                        <h3 id="total-credits">0 tCO₂e</h3>
+                        <p class="stat-change up"><i class="fas fa-caret-up"></i> 0% <span>vs last month</span></p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(245,158,11,0.12); color: var(--warning)"><i
+                            class="fas fa-wallet"></i></div>
+                    <div class="stat-info">
+                        <h4>Balance</h4>
+                        <h3 id="user-balance">$0</h3>
+                        <p class="stat-change"><span>Available funds</span></p>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon" style="background: rgba(139,92,246,0.12); color: var(--accent)"><i
+                            class="fas fa-exchange-alt"></i></div>
+                    <div class="stat-info">
+                        <h4>Transactions</h4>
+                        <h3 id="total-tx">0</h3>
+                        <p class="stat-change"><span>All time</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Charts -->
+            <div class="chart-row fade-in">
+                <div class="card chart-card">
+                    <h3>Portfolio Performance</h3>
+                    <div style="height: 280px;"><canvas id="portfolio-chart"></canvas></div>
+                </div>
+                <div class="card chart-card">
+                    <h3>Credit Distribution</h3>
+                    <div style="height: 280px;"><canvas id="distribution-chart"></canvas></div>
+                </div>
+            </div>
+
+            <!-- Recent Transactions + Top Projects -->
+            <div class="data-row fade-in">
+                <div class="card">
+                    <h3>Recent Transactions</h3>
+                    <table class="mt-2">
+                        <thead>
+                            <tr>
+                                <th>Project</th>
+                                <th>Type</th>
+                                <th>Quantity</th>
+                                <th>Amount</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recent-tx-table">
+                            <tr>
+                                <td colspan="5" class="text-center text-muted" style="padding:2rem">No transactions yet.
+                                    Visit the <a href="marketplace.html" style="color:var(--primary)">Marketplace</a> to
+                                    start trading.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card">
+                    <h3>Top Performing</h3>
+                    <div id="top-projects" class="mt-2">
+                        <p class="text-muted">Loading projects...</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils/constants.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/auth.js"></script>
+    <script src="js/core/router.js"></script>
+    <script src="js/ui/theme.js"></script>
+    <script src="js/ui/ui.js"></script>
+    <script src="js/ui/sidebar.js"></script>
+    <script src="js/services/notifications.js"></script>
+    <script src="js/services/portfolio.js"></script>
+    <script src="js/services/priceSimulator.js"></script>
+    <script src="js/charts/charts.js"></script>
+    <script src="js/charts/lineChart.js"></script>
+    <script src="js/charts/pieChart.js"></script>
+    <script src="js/modules/dashboard.js"></script>
+    <script src="js/core/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const waitForApp = setInterval(() => {
+                if (window.App && window.App._readyCallbacks !== undefined) {
+                    clearInterval(waitForApp);
+                    App.onReady(() => {
+                        if (window.Dashboard) Dashboard.init();
+
+                        // Update stats from state
+                        if (window.state && window.state.user) {
+                            document.getElementById('user-balance').textContent = '$' + state.user.balance.toLocaleString();
+                            document.getElementById('total-tx').textContent = state.transactions.length;
+
+                            // Calculate portfolio value
+                            let totalCredits = 0;
+                            let portfolioValue = 0;
+                            if (state.user.portfolio) {
+                                state.user.portfolio.forEach(h => {
+                                    totalCredits += h.quantity;
+                                    const project = state.projects.find(p => p.id === h.projectId);
+                                    portfolioValue += h.quantity * (project ? project.price : h.averagePrice);
+                                });
+                            }
+                            document.getElementById('portfolio-value').textContent = '$' + portfolioValue.toLocaleString(undefined, { minimumFractionDigits: 2 });
+                            document.getElementById('total-credits').textContent = totalCredits + ' tCO₂e';
+
+                            // Render transactions
+                            if (state.transactions.length > 0) {
+                                document.getElementById('recent-tx-table').innerHTML = state.transactions.slice(0, 5).map(tx => `
+                                    <tr>
+                                        <td>${tx.projectName}</td>
+                                        <td><span class="status-badge ${tx.type === 'Buy' ? 'completed' : 'pending'}">${tx.type}</span></td>
+                                        <td>${tx.quantity} t</td>
+                                        <td class="fw-bold">$${tx.total.toFixed(2)}</td>
+                                        <td class="text-muted">${new Date(tx.date).toLocaleDateString()}</td>
+                                    </tr>
+                                `).join('');
+                            }
+
+                            // Top projects
+                            const topProjects = [...state.projects].sort((a, b) => b.change - a.change).slice(0, 4);
+                            document.getElementById('top-projects').innerHTML = topProjects.map(p => `
+                                <div class="project-item">
+                                    <img src="${p.image}" alt="${p.name}">
+                                    <div class="project-info">
+                                        <h5>${p.name}</h5>
+                                        <p>${p.location}</p>
+                                    </div>
+                                    <div class="project-price">
+                                        <span>$${p.price.toFixed(2)}</span>
+                                        <span class="change ${p.change >= 0 ? 'up' : 'down'}">
+                                            ${p.change >= 0 ? '+' : ''}${p.change}%
+                                        </span>
+                                    </div>
+                                </div>
+                            `).join('');
+                        }
+                    });
+                }
+            }, 50);
+        });
+    </script>
+</body>
+
+</html>

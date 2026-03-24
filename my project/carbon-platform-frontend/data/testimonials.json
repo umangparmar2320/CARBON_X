@@ -1,0 +1,16 @@
+[
+    {
+        "id": 1,
+        "user": "Sarah J.",
+        "company": "EcoCorp",
+        "text": "CarbonX has revolutionized how we manage our carbon offsets. The interface is intuitive and the real-time data is invaluable.",
+        "avatar": "https://i.pravatar.cc/150?u=sarah"
+    },
+    {
+        "id": 2,
+        "user": "Michael R.",
+        "company": "GreenLogistics",
+        "text": "Transparent and reliable. The reporting features make our ESG audits a breeze.",
+        "avatar": "https://i.pravatar.cc/150?u=michael"
+    }
+]

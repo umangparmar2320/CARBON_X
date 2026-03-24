@@ -1,0 +1,141 @@
+/* ===================================================
+   CarbonX — Responsive Breakpoints & Overrides
+   =================================================== */
+
+/* Extra Large (Desktop) */
+@media (min-width: 1400px) {
+  .main-content {
+    padding: 2.5rem 3rem;
+  }
+}
+
+/* Large (Laptop) */
+@media (max-width: 1200px) {
+  .dashboard-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chart-row {
+    grid-template-columns: 1fr;
+  }
+
+  .data-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Medium (Tablet) */
+@media (max-width: 1024px) {
+  .main-sidebar {
+    transform: translateX(-100%);
+  }
+
+  .main-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .main-content {
+    margin-left: 0;
+  }
+
+  .nav-search {
+    display: none;
+  }
+}
+
+/* Small (Large Phone) */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 1.25rem;
+  }
+
+  .marketplace-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filters-bar {
+    flex-direction: column;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .btn-xl {
+    padding: 0.875rem 2rem;
+    font-size: 1rem;
+  }
+
+  table {
+    font-size: 0.85rem;
+  }
+
+  th,
+  td {
+    padding: 0.6rem 0.5rem;
+  }
+}
+
+/* Extra Small (Phone) */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 2rem 1.5rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .hero-btns {
+    flex-direction: column;
+  }
+
+  .hero-btns .btn {
+    width: 100%;
+  }
+
+  .metrics-bar {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+}
+
+/* Print Styles */
+@media print {
+
+  .main-navbar,
+  .main-sidebar,
+  .btn,
+  .filters-bar,
+  .nav-actions {
+    display: none !important;
+  }
+
+  .main-content {
+    margin: 0 !important;
+    padding: 1rem !important;
+  }
+
+  body {
+    background: white;
+    color: black;
+  }
+
+  .card {
+    box-shadow: none;
+    border-color: #ddd;
+  }
+}

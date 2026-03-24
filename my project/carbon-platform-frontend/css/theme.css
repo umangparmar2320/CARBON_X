@@ -1,0 +1,43 @@
+/* ===================================================
+   CarbonX — Theme Overrides & Glassmorphism
+   =================================================== */
+
+/* Glass Effect */
+.glass {
+  background: rgba(30, 41, 59, 0.6);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+body.light-mode .glass {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Light mode cards */
+body.light-mode .card,
+body.light-mode .stat-card {
+  background: #ffffff;
+  border-color: #e2e8f0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+body.light-mode .card:hover,
+body.light-mode .stat-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+body.light-mode .nav-link.active {
+  background: var(--primary);
+  color: white;
+}
+
+body.light-mode .feature-card {
+  background: #ffffff;
+}
+
+body.light-mode select {
+  background: #f1f5f9;
+  color: #0f172a;
+  border-color: #e2e8f0;
+}

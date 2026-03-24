@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Detail | CarbonX</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/project.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header id="main-navbar" class="main-navbar"></header>
+        <aside id="main-sidebar" class="main-sidebar"></aside>
+
+        <main class="main-content">
+            <div class="fade-in mb-2">
+                <a href="marketplace.html" class="text-muted"><i class="fas fa-arrow-left"></i> Back to Marketplace</a>
+            </div>
+
+            <div class="data-row fade-in">
+                <div class="card">
+                    <div class="d-flex justify-between">
+                        <h1 id="project-name">Project Name</h1>
+                        <button class="watchlist-btn"><i class="far fa-star"></i></button>
+                    </div>
+                    <p id="project-location" class="text-muted mb-2">Location • Type</p>
+
+                    <img id="project-img" src="" alt=""
+                        style="width: 100%; height: 300px; object-fit: cover; border-radius: var(--radius); margin-bottom: 2rem;">
+
+                    <h3>About this Project</h3>
+                    <p id="project-description" class="mt-1">Detailed description...</p>
+
+                    <div class="mt-2">
+                        <h3>Price History</h3>
+                        <div style="height: 300px;"><canvas id="project-history-chart"></canvas></div>
+                    </div>
+                </div>
+
+                <div class="sidebar-info">
+                    <div class="card mb-2">
+                        <div class="d-flex justify-between align-center mb-1">
+                            <h2 id="project-price">$0.00</h2>
+                            <span id="project-change" class="status-badge completed">+0%</span>
+                        </div>
+                        <p id="project-available" class="text-muted mb-2">0 credits available</p>
+                        <button id="btn-buy-now" class="btn btn-primary btn-block">Buy Credits Now</button>
+                    </div>
+
+                    <div class="card">
+                        <h3>Project Verification</h3>
+                        <div class="mt-1">
+                            <p><strong>Rating:</strong> <span id="project-rating" class="rating-badge">AAA</span></p>
+                            <p class="mt-1"><strong>Risk level:</strong> <span id="project-risk">Low</span></p>
+                            <p class="mt-1"><strong>Registry:</strong> Verra (VCS)</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils/constants.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/auth.js"></script>
+    <script src="js/core/router.js"></script>
+    <script src="js/ui/theme.js"></script>
+    <script src="js/ui/ui.js"></script>
+    <script src="js/ui/sidebar.js"></script>
+    <script src="js/ui/modal.js"></script>
+    <script src="js/services/notifications.js"></script>
+    <script src="js/services/watchlist.js"></script>
+    <script src="js/charts/charts.js"></script>
+    <script src="js/charts/lineChart.js"></script>
+    <script src="js/modules/marketplace.js"></script>
+    <script src="js/modules/project.js"></script>
+    <script src="js/core/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const waitForApp = setInterval(() => {
+                if (window.App && window.App._readyCallbacks !== undefined) {
+                    clearInterval(waitForApp);
+                    App.onReady(() => { if (window.ProjectDetail) ProjectDetail.init(); });
+                }
+            }, 50);
+        });
+    </script>
+</body>
+
+</html>

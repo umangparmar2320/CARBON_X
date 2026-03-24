@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Compliance | CarbonX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/reports.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header id="main-navbar" class="main-navbar"></header>
+        <aside id="main-sidebar" class="main-sidebar"></aside>
+
+        <main class="main-content">
+            <div class="marketplace-header fade-in">
+                <div>
+                    <h1>ESG Reporting</h1>
+                    <p class="text-muted">Export your carbon offset data for compliance and sustainability reports.</p>
+                </div>
+                <div class="d-flex gap-1">
+                    <button id="export-csv" class="btn btn-outline"><i class="fas fa-file-csv"></i> Export CSV</button>
+                    <button id="export-pdf" class="btn btn-primary"><i class="fas fa-file-pdf"></i> Download
+                        PDF</button>
+                </div>
+            </div>
+
+            <div class="dashboard-grid fade-in mt-2" id="report-container">
+                <div class="card">
+                    <h4>Total Credits Retired</h4>
+                    <h2 id="report-total-bought">0 tCO2e</h2>
+                    <p class="text-muted">Life to date</p>
+                </div>
+                <div class="card">
+                    <h4>Total Investment</h4>
+                    <h2 id="report-total-spent">$0</h2>
+                    <p class="text-muted">Carbon offset budget</p>
+                </div>
+            </div>
+
+            <div class="card fade-in mt-2">
+                <h3>Full Transaction History</h3>
+                <table class="mt-2">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Project</th>
+                            <th>Type</th>
+                            <th>Quantity (t)</th>
+                            <th>Unit Price</th>
+                            <th>Total Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reports-history-table"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils/constants.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/auth.js"></script>
+    <script src="js/core/router.js"></script>
+    <script src="js/ui/theme.js"></script>
+    <script src="js/ui/ui.js"></script>
+    <script src="js/ui/sidebar.js"></script>
+    <script src="js/services/notifications.js"></script>
+    <script src="js/utils/exporter.js"></script>
+    <script src="js/modules/reports.js"></script>
+    <script src="js/core/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const waitForApp = setInterval(() => {
+                if (window.App && window.App._readyCallbacks !== undefined) {
+                    clearInterval(waitForApp);
+                    App.onReady(() => { if (window.Reports) Reports.init(); });
+                }
+            }, 50);
+        });
+    </script>
+</body>
+
+</html>

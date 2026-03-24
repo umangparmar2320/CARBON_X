@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Market Insights | CarbonX</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/analytics.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header id="main-navbar" class="main-navbar"></header>
+        <aside id="main-sidebar" class="main-sidebar"></aside>
+
+        <main class="main-content">
+            <div class="fade-in mb-2">
+                <h1>Market Insights</h1>
+                <p class="text-muted">Analysis of global carbon market trends and institutional data.</p>
+            </div>
+
+            <div class="dashboard-grid fade-in">
+                <div class="card">
+                    <h4>Market Average Price</h4>
+                    <h2 id="market-avg-price" style="color: var(--primary);">$0.00</h2>
+                    <p class="text-muted">Global baseline</p>
+                </div>
+                <div class="card">
+                    <h4>Market Cap (Sim)</h4>
+                    <h2>$14.2B</h2>
+                    <p class="text-green">+2.4% today</p>
+                </div>
+                <div class="card">
+                    <h4>Total Trading Volume</h4>
+                    <h2 id="market-total-volume">$0</h2>
+                    <p class="text-muted">Total platform volume</p>
+                </div>
+                <div class="card">
+                    <h4>Active Projects</h4>
+                    <h2>248</h2>
+                    <p class="text-muted">Managed by CarbonX</p>
+                </div>
+            </div>
+
+            <div class="chart-row fade-in mt-2">
+                <div class="card chart-card">
+                    <h3>Market Index Trend</h3>
+                    <div style="height: 320px;"><canvas id="market-trend-chart"></canvas></div>
+                </div>
+                <div class="card chart-card">
+                    <h3>Sector Distribution</h3>
+                    <div style="height: 320px;"><canvas id="market-category-chart"></canvas></div>
+                </div>
+            </div>
+
+            <div class="card fade-in mt-2">
+                <h3>Top Market Movers</h3>
+                <table class="mt-2">
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Current Price</th>
+                            <th>24h Change</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
+                    <tbody id="top-movers-table"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils/constants.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/auth.js"></script>
+    <script src="js/core/router.js"></script>
+    <script src="js/ui/theme.js"></script>
+    <script src="js/ui/ui.js"></script>
+    <script src="js/ui/sidebar.js"></script>
+    <script src="js/services/notifications.js"></script>
+    <script src="js/charts/charts.js"></script>
+    <script src="js/charts/lineChart.js"></script>
+    <script src="js/charts/pieChart.js"></script>
+    <script src="js/modules/analytics.js"></script>
+    <script src="js/core/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const waitForApp = setInterval(() => {
+                if (window.App && window.App._readyCallbacks !== undefined) {
+                    clearInterval(waitForApp);
+                    App.onReady(() => { if (window.Analytics) Analytics.init(); });
+                }
+            }, 50);
+        });
+    </script>
+</body>
+
+</html>

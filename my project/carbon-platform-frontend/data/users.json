@@ -1,0 +1,14 @@
+[
+  {
+    "id": "u1",
+    "username": "demo",
+    "password": "password123",
+    "name": "Demo User",
+    "email": "demo@carbonx.com",
+    "role": "Buyer",
+    "balance": 50000,
+    "portfolio": [],
+    "watchlist": [],
+    "notifications": []
+  }
+]

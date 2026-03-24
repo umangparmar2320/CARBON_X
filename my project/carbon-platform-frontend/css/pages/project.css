@@ -1,0 +1,76 @@
+/* ============================================
+   Project Detail Page Specific Styles
+   ============================================ */
+
+.data-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1.5rem;
+    align-items: start;
+}
+
+.sidebar-info .card {
+    position: sticky;
+    top: 5rem;
+}
+
+.sidebar-info h2 {
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.mb-1 {
+    margin-bottom: 0.5rem;
+}
+
+.mb-2 {
+    margin-bottom: 1rem;
+}
+
+.mt-1 {
+    margin-top: 0.5rem;
+}
+
+.mt-2 {
+    margin-top: 1rem;
+}
+
+.watchlist-btn {
+    background: none;
+    border: 2px solid var(--border);
+    color: var(--text-dim);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-size: 1.1rem;
+}
+
+.watchlist-btn:hover,
+.watchlist-btn.active {
+    color: var(--warning);
+    border-color: var(--warning);
+}
+
+@media (max-width: 768px) {
+    .data-row {
+        grid-template-columns: 1fr;
+    }
+
+    .sidebar-info .card {
+        position: static;
+    }
+}

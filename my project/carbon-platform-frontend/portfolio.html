@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio | CarbonX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header id="main-navbar" class="main-navbar"></header>
+        <aside id="main-sidebar" class="main-sidebar"></aside>
+
+        <main class="main-content">
+            <div class="fade-in mb-2">
+                <h1>My Carbon Portfolio</h1>
+                <p class="text-muted">Tracking your holding and environmental impact.</p>
+            </div>
+
+            <div class="card fade-in">
+                <h3>Asset Allocation</h3>
+                <table class="mt-2">
+                    <thead>
+                        <tr>
+                            <th>Project</th>
+                            <th>Quantity (t)</th>
+                            <th>Avg Price</th>
+                            <th>Current Price</th>
+                            <th>P/L</th>
+                            <th>Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="portfolio-table"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils/constants.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/auth.js"></script>
+    <script src="js/core/router.js"></script>
+    <script src="js/ui/theme.js"></script>
+    <script src="js/ui/ui.js"></script>
+    <script src="js/ui/sidebar.js"></script>
+    <script src="js/services/notifications.js"></script>
+    <script src="js/services/portfolio.js"></script>
+    <script src="js/core/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const waitForApp = setInterval(() => {
+                if (window.App && window.App._readyCallbacks !== undefined) {
+                    clearInterval(waitForApp);
+                    App.onReady(() => {
+                        const container = document.getElementById('portfolio-table');
+                        if (state.user) {
+                            if (!state.user.portfolio || state.user.portfolio.length === 0) {
+                                container.innerHTML = '<tr><td colspan="6" class="text-center text-muted" style="padding:2rem">No holdings yet. Visit the <a href="marketplace.html" style="color:var(--primary)">Marketplace</a> to buy credits.</td></tr>';
+                                return;
+                            }
+                            container.innerHTML = state.user.portfolio.map(item => {
+                                const project = state.projects.find(p => p.id === item.projectId);
+                                const currentPrice = project ? project.price : item.averagePrice;
+                                const pnl = (currentPrice - item.averagePrice) * item.quantity;
+                                return `
+                            <tr>
+                                <td>${item.projectName}</td>
+                                <td>${item.quantity}</td>
+                                <td>$${item.averagePrice.toFixed(2)}</td>
+                                <td>$${currentPrice.toFixed(2)}</td>
+                                <td class="${pnl >= 0 ? 'text-green' : 'text-red'}">${pnl >= 0 ? '+' : ''}$${pnl.toFixed(2)}</td>
+                                <td>$${(item.quantity * currentPrice).toLocaleString()}</td>
+                            </tr>
+                        `;
+                            }).join('');
+                        }
+                    });
+                }
+            }, 50);
+        });
+    </script>
+</body>
+
+</html>

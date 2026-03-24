@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Marketplace | CarbonX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/pages/marketplace.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+
+<body>
+    <div class="app-container">
+        <header id="main-navbar" class="main-navbar"></header>
+        <aside id="main-sidebar" class="main-sidebar"></aside>
+
+        <main class="main-content">
+            <div class="marketplace-header fade-in">
+                <div>
+                    <h1>Marketplace</h1>
+                    <p class="text-muted">Browse and trade high-quality certified carbon credits from verified projects
+                        worldwide.</p>
+                </div>
+                <div class="view-toggles">
+                    <button id="view-grid" class="btn-icon active" title="Grid View"><i class="fas fa-th"></i></button>
+                    <button id="view-table" class="btn-icon" title="Table View"><i class="fas fa-list"></i></button>
+                </div>
+            </div>
+
+            <div class="filters-bar fade-in">
+                <div class="nav-search" style="margin: 0; flex: 1; max-width: 340px;">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="market-search" placeholder="Search projects by name or location...">
+                </div>
+                <select id="filter-type">
+                    <option value="all">All Types</option>
+                    <option value="Forestry">Forestry</option>
+                    <option value="Renewable">Renewable Energy</option>
+                    <option value="Technology">Technology</option>
+                    <option value="Community">Community</option>
+                </select>
+            </div>
+
+            <div id="marketplace-container" class="projects-grid fade-in">
+                <!-- Projects rendered by JS -->
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/utils/constants.js"></script>
+    <script src="js/utils/helpers.js"></script>
+    <script src="js/core/state.js"></script>
+    <script src="js/core/auth.js"></script>
+    <script src="js/core/router.js"></script>
+    <script src="js/ui/theme.js"></script>
+    <script src="js/ui/ui.js"></script>
+    <script src="js/ui/sidebar.js"></script>
+    <script src="js/services/notifications.js"></script>
+    <script src="js/services/watchlist.js"></script>
+    <script src="js/modules/marketplace.js"></script>
+    <script src="js/core/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Wait for App to fully load data before initializing marketplace
+            const waitForApp = setInterval(() => {
+                if (window.App && window.App._readyCallbacks !== undefined) {
+                    clearInterval(waitForApp);
+                    App.onReady(() => {
+                        if (window.Marketplace) Marketplace.init();
+                    });
+                }
+            }, 50);
+        });
+    </script>
+</body>
+
+</html>
